@@ -17,7 +17,7 @@ services:
       networks:
         - app-network
 
-      command : npm run dev
+      command : npm run start
 
     mongodb_adonis:
       image: mongo:latest
