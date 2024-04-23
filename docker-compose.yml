@@ -1,0 +1,41 @@
+version: '1.1'
+services:
+    adonis_api_docker:
+      build:
+        context: .
+        dockerfile: Dockerfile
+
+      container_name: "adonis_api_docker"
+      ports: 
+        - 4500:4500
+      volumes:
+        - '/usr/src/adonis'
+
+      environment:
+      - NODE_ENV=production
+
+      networks:
+        - app-network
+
+      command : npm run dev
+
+    mongodb_adonis:
+      image: mongo:latest
+      restart: always
+      container_name: mongodb_db_adonis
+      ports:
+        - 27017:27017
+        
+      networks:
+        - mongo-compose-network
+
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=example_username
+        - MONGO_INITDB_ROOT_PASSWORD=example_password
+        - MONGO_INITDB_DATABASE=app
+
+networks:
+  app-network:
+    driver: bridge
+  mongo-compose-network:
+    driver: bridge
